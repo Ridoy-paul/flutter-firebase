@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter_firebase/models/match_model.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -25,7 +26,35 @@ class _MyHomePageState extends State<MyHomePage> {
     final database = FirebaseDatabase.instanceFor(app: firebaseApp, databaseURL: 'https://flutter-firebase-32914-default-rtdb.firebaseio.com/');
     final snapshot = await database.ref('match').get();
     if (snapshot.exists) {
-      print(snapshot.value);
+      //print(snapshot.value);
+
+      // Map<String, dynamic> jsonData = {
+      //   "matches": [
+      //     {
+      //       "first_team": {"team_name": "Argentina", "goals": 5},
+      //       "running_time": "83:22",
+      //       "second_team": {"team_name": "Bangladesh", "goals": 7},
+      //       "total_time": "90:00"
+      //     },
+      //     {
+      //       "first_team": {"team_name": "Brazil", "goals": 3},
+      //       "running_time": "43:32",
+      //       "second_team": {"team_name": "Africa", "goals": 0},
+      //       "total_time": "90:00"
+      //     }
+      //   ]
+      // };
+      //
+      // Match matchData = Match.fromJson(jsonData);
+
+      // for (var match in matchData.matches!) {
+      //   print("Match:");
+      //   print("  First Team: ${match.firstTeam!.teamName} (${match.firstTeam!.goals} goals)");
+      //   print("  Running Time: ${match.runningTime}");
+      //   print("  Second Team: ${match.secondTeam!.teamName} (${match.secondTeam!.goals} goals)");
+      //   print("  Total Time: ${match.totalTime}");
+      //   print("");
+      // }
 
     } else {
       print('No data available.');
