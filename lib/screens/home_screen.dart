@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -18,9 +20,16 @@ class _MyHomePageState extends State<MyHomePage> {
     fetchData();
   }
 
-  void fetchData() {
+  Future<void> fetchData() async {
     final firebaseApp = Firebase.app();
     final database = FirebaseDatabase.instanceFor(app: firebaseApp, databaseURL: 'https://flutter-firebase-32914-default-rtdb.firebaseio.com/');
+    final snapshot = await database.ref('match').get();
+    if (snapshot.exists) {
+      print(snapshot.value);
+
+    } else {
+      print('No data available.');
+    }
   }
 
 
