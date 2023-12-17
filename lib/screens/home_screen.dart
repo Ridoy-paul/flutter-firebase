@@ -40,8 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               child: ListTile(
-                title: Text('Item 1'),
-                subtitle: Text('Subtitle for Item $index'),
+                title: Text('Item 1', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),),
                 trailing: const Icon(Icons.arrow_right_alt),
                 onTap: () {
                   print("tab");
