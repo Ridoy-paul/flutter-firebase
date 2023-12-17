@@ -9,24 +9,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Colors.deepPurple,
         title:const Text("Match Lists"),
       ),
       body: SafeArea(
         child: ListView.builder(
-          // scrollDirection: Axis.horizontal,
           itemCount: 10,
           itemBuilder: (BuildContext context, int index) {
             return Card(
@@ -36,7 +28,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 borderRadius: BorderRadius.circular(5),
                 side: const BorderSide(
                   color: Colors.black12,
-                  width: 1.0, // Border width
+                  width: 1.0,
                 ),
               ),
               child: ListTile(
