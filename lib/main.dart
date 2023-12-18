@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'controllers/match_list_controller.dart';
 import 'package:get/get.dart';
 import 'screens/home_screen.dart';
 
@@ -22,6 +23,15 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
       home: const MyHomePage(),
+      initialBinding: ControllerBindings(),
     );
   }
+}
+
+class ControllerBindings extends Bindings {
+  @override
+  void dependencies() {
+    Get.put(MatchListController());
+  }
+
 }
