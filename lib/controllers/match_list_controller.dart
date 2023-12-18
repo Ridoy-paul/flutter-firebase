@@ -11,6 +11,7 @@ class MatchListController extends GetxController {
   List<MatchData> get matchList => _matchList;
 
   Future<bool> getMatchesInfo() async {
+    _matchList.clear();
     _getMatchListScreenInProgress = true;
     update();
 

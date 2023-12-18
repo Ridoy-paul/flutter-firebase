@@ -28,32 +28,43 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: SafeArea(
         child: GetBuilder<MatchListController>(builder: (controller) {
-          return Container(
-            child: ListView.builder(
-              itemCount: controller.matchList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Card(
-                  color: Colors.white,
-                  margin: const EdgeInsets.only(top: 8, left: 5, right: 5),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
-                    side: const BorderSide(
-                      color: Colors.black12,
-                      width: 1.0,
-                    ),
-                  ),
-                  child: ListTile(
-                    title: Text("${controller.matchList[index]
-                        .firstTeamName} VS ${controller.matchList[index].secondTeamName}",
-                      style: const TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.w500),),
-                    trailing: const Icon(Icons.arrow_right_alt),
-                    onTap: () {
-                      print("tab");
-                    },
-                  ),
-                );
-              },
+          return RefreshIndicator(
+            onRefresh: () async{
+              _matchListController.getMatchesInfo();
+            },
+            child: Visibility(
+              visible: !controller.getMatchListScreenInProgress,
+              replacement: const Center(
+                child: CircularProgressIndicator(),
+              ),
+              child: Container(
+                child: ListView.builder(
+                  itemCount: controller.matchList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Card(
+                      color: Colors.white,
+                      margin: const EdgeInsets.only(top: 8, left: 5, right: 5),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        side: const BorderSide(
+                          color: Colors.black12,
+                          width: 1.0,
+                        ),
+                      ),
+                      child: ListTile(
+                        title: Text("${controller.matchList[index]
+                            .firstTeamName} VS ${controller.matchList[index].secondTeamName}",
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w500),),
+                        trailing: const Icon(Icons.arrow_right_alt),
+                        onTap: () {
+                          print("tab");
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ),
             ),
           );
         }),
