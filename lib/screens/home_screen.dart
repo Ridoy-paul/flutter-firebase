@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../controllers/match_list_controller.dart';
 import 'package:get/get.dart';
+import 'match_details_screen.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -37,33 +38,39 @@ class _MyHomePageState extends State<MyHomePage> {
               replacement: const Center(
                 child: CircularProgressIndicator(),
               ),
-              child: Container(
-                child: ListView.builder(
-                  itemCount: controller.matchList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Card(
-                      color: Colors.white,
-                      margin: const EdgeInsets.only(top: 8, left: 5, right: 5),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        side: const BorderSide(
-                          color: Colors.black12,
-                          width: 1.0,
-                        ),
+              child: ListView.builder(
+                itemCount: controller.matchList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Card(
+                    color: Colors.white,
+                    margin: const EdgeInsets.only(top: 8, left: 5, right: 5),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      side: const BorderSide(
+                        color: Colors.black12,
+                        width: 1.0,
                       ),
-                      child: ListTile(
-                        title: Text("${controller.matchList[index]
-                            .firstTeamName} VS ${controller.matchList[index].secondTeamName}",
-                          style: const TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w500),),
-                        trailing: const Icon(Icons.arrow_right_alt),
-                        onTap: () {
-                          print("tab");
-                        },
-                      ),
-                    );
-                  },
-                ),
+                    ),
+                    child: ListTile(
+                      title: Text("${controller.matchList[index]
+                          .firstTeamName} VS ${controller.matchList[index].secondTeamName}",
+                        style: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w500),),
+                      trailing: const Icon(Icons.arrow_right_alt),
+                      onTap: () {
+                        Get.to(MatchDetailsScreen(
+                            first_team_name: controller.matchList[index].firstTeamName,
+                            second_team_name: controller.matchList[index].secondTeamName,
+                            first_team_goal: controller.matchList[index].firstTeamGoal,
+                            second_team_goal: controller.matchList[index].secondTeamGoal,
+                            total_time: controller.matchList[index].totalTime,
+                            running_time: controller.matchList[index].runningTime,
+                          )
+                        );
+                      },
+                    ),
+                  );
+                },
               ),
             ),
           );
