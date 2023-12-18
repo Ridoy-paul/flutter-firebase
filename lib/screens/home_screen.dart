@@ -1,10 +1,8 @@
 
-import 'dart:convert';
-
-import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter_firebase/models/match_model.dart';
+import '../models/match_model.dart';
+import 'package:get/get.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -14,53 +12,33 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  List<MatchData> matchList = [];
+  FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
+  Future<void> getMatchesInfo() async {
+    QuerySnapshot result = await firebaseFirestore.collection('playing_match').get();
+    for (QueryDocumentSnapshot element in result.docs) {
+      MatchData matchData = MatchData(
+        secondTeamGoal: int.tryParse(element.get('second_team_goal').toString()) ?? 0,
+        runningTime: element.get('running_time'),
+        firstTeamGoal: int.tryParse(element.get('first_team_goal').toString()) ?? 0,
+        totalTime: element.get('total_time'),
+        firstTeamName: element.get('first_team_name'),
+        secondTeamName: element.get('second_team_name'),
+      );
+
+      matchList.add(matchData);
+      if(mounted) {
+        setState(() {});
+      }
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    fetchData();
+    getMatchesInfo();
   }
-
-  Future<void> fetchData() async {
-    final firebaseApp = Firebase.app();
-    final database = FirebaseDatabase.instanceFor(app: firebaseApp, databaseURL: 'https://flutter-firebase-32914-default-rtdb.firebaseio.com/');
-    final snapshot = await database.ref('match').get();
-    if (snapshot.exists) {
-      //print(snapshot.value);
-
-      // Map<String, dynamic> jsonData = {
-      //   "matches": [
-      //     {
-      //       "first_team": {"team_name": "Argentina", "goals": 5},
-      //       "running_time": "83:22",
-      //       "second_team": {"team_name": "Bangladesh", "goals": 7},
-      //       "total_time": "90:00"
-      //     },
-      //     {
-      //       "first_team": {"team_name": "Brazil", "goals": 3},
-      //       "running_time": "43:32",
-      //       "second_team": {"team_name": "Africa", "goals": 0},
-      //       "total_time": "90:00"
-      //     }
-      //   ]
-      // };
-      //
-      // Match matchData = Match.fromJson(jsonData);
-
-      // for (var match in matchData.matches!) {
-      //   print("Match:");
-      //   print("  First Team: ${match.firstTeam!.teamName} (${match.firstTeam!.goals} goals)");
-      //   print("  Running Time: ${match.runningTime}");
-      //   print("  Second Team: ${match.secondTeam!.teamName} (${match.secondTeam!.goals} goals)");
-      //   print("  Total Time: ${match.totalTime}");
-      //   print("");
-      // }
-
-    } else {
-      print('No data available.');
-    }
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: SafeArea(
         child: ListView.builder(
-          itemCount: 10,
+          itemCount: matchList.length,
           itemBuilder: (BuildContext context, int index) {
             return Card(
               color: Colors.white,
@@ -84,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               child: ListTile(
-                title: Text('Item 1', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),),
+                title: Text("${matchList[index].firstTeamName} VS ${matchList[index].secondTeamName}", style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),),
                 trailing: const Icon(Icons.arrow_right_alt),
                 onTap: () {
                   print("tab");
@@ -97,3 +75,4 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
