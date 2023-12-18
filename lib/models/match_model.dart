@@ -1,4 +1,5 @@
 class MatchData {
+  final int id;
   final String firstTeamName;
   final String secondTeamName;
   final int secondTeamGoal;
@@ -7,6 +8,7 @@ class MatchData {
   final String totalTime;
 
   MatchData({
+    required this.id,
     required this.secondTeamGoal,
     required this.runningTime,
     required this.firstTeamGoal,

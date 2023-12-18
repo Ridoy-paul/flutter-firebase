@@ -18,6 +18,7 @@ class MatchListController extends GetxController {
     QuerySnapshot result = await firebaseFirestore.collection('playing_match').get();
     for (QueryDocumentSnapshot element in result.docs) {
       MatchData matchData = MatchData(
+        id: element.get('id'),
         secondTeamGoal: int.tryParse(element.get('second_team_goal').toString()) ?? 0,
         runningTime: element.get('running_time'),
         firstTeamGoal: int.tryParse(element.get('first_team_goal').toString()) ?? 0,

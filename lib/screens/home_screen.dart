@@ -59,12 +59,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       trailing: const Icon(Icons.arrow_right_alt),
                       onTap: () {
                         Get.to(MatchDetailsScreen(
+                            id: controller.matchList[index].id,
                             first_team_name: controller.matchList[index].firstTeamName,
                             second_team_name: controller.matchList[index].secondTeamName,
-                            first_team_goal: controller.matchList[index].firstTeamGoal,
-                            second_team_goal: controller.matchList[index].secondTeamGoal,
-                            total_time: controller.matchList[index].totalTime,
-                            running_time: controller.matchList[index].runningTime,
                           )
                         );
                       },
