@@ -7,7 +7,7 @@ class MatchListController extends GetxController {
   bool _getMatchListScreenInProgress = false;
   final List<MatchData> _matchList = [];
 
-  bool get getMatchListScreenInProgress => getMatchListScreenInProgress;
+  bool get getMatchListScreenInProgress => _getMatchListScreenInProgress;
   List<MatchData> get matchList => _matchList;
 
   Future<bool> getMatchesInfo() async {
